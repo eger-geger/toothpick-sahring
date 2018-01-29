@@ -7,6 +7,7 @@ from . import apis
 from .dal import db
 
 def bootstrap(name):
+    """Creates Flask application and itializes extensions"""
     return _boot(bootstrap_app(name), bootsrap_db, bootsrap_api, CORS)
 
 def _boot(app, *modules):
@@ -16,11 +17,13 @@ def _boot(app, *modules):
     return app
 
 def bootstrap_app(name):
+    """Creates Flask application"""
     app = Flask(name)
     app.config.from_pyfile('default.cfg')
     return app
 
 def bootsrap_db(app):
+    """Initializes Flas-Alchemy extension"""
     db.init_app(app)
 
     with app.app_context():
@@ -34,6 +37,7 @@ def _load_fixtures(app, db):
         load_fixtures(db, loaders.load(os.path.join(app.root_path, '..', 'fixtures', fixture)))
 
 def bootsrap_api(app):
+    """Initializes Flask-RestPlus extension"""
     api = Api(app)
 
     for ns in apis.namespaces:

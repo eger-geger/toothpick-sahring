@@ -1,0 +1,35 @@
+- model: toothpick_sharing.dal.User
+  records:
+    - id: 1
+      name: Jack Daniels
+    - id: 2
+      name: Pamela Anderson
+    - id: 3
+      name: Hugh Jackman
+
+- model: toothpick_sharing.dal.Toothpick
+  records:
+    - id: 1
+    - id: 2
+    - id: 3
+
+- model: toothpick_sharing.dal.Owner
+  records:
+    - user_id: 1
+      toothpick_id: 1
+      since: 2018-01-01
+    - user_id: 1
+      toothpick_id: 2
+      since: 2018-01-01
+    - user_id: 1
+      toothpick_id: 3
+      since: 2018-01-20
+    - user_id: 2
+      toothpick_id: 2
+      since: 2018-01-10
+    - user_id: 2
+      toothpick_id: 3
+      since: 2018-01-10
+    - user_id: 3
+      toothpick_id: 1
+      since: 2018-01-15

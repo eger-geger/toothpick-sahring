@@ -1,4 +1,4 @@
-from . import bootstrap
+from . import Service
 
 if __name__ == '__main__':
-    bootstrap(__name__).run()
+    Service(__name__).app.run()

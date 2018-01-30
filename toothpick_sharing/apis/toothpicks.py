@@ -23,7 +23,7 @@ class ToothpickResource(Resource):
     @ns.doc(responses = { 404: 'Unknown <toothpick_id>' })
     def get(self, toothpick_id):
         """Retreives toothpick by ID"""
-        return get_toothpick_or_abort(id)
+        return get_toothpick_or_abort(toothpick_id)
 
 @ns.route('/toothpicks')
 class ToohtpickCollectionResource(Resource):
@@ -67,11 +67,11 @@ class ToothpickOwnersResource(Resource):
 
         return toothpick, 200
         
-def get_toothpick_or_abort(id, api=ns):
+def get_toothpick_or_abort(toothpick_id, api=ns):
     """Retreives toothpick by ID and raises 404 error when such user does not exist"""
-    toothpick = Toothpick.query.filter_by(id=id).first()
+    toothpick = Toothpick.query.filter_by(id=toothpick_id).first()
 
     if not toothpick:
-        api.abort(404, 'Toothpick with id=<%d> not found' % id)
+        api.abort(404, 'Toothpick with id=<%d> not found' % toothpick_id)
 
     return toothpick

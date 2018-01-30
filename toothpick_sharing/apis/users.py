@@ -37,11 +37,11 @@ class UserCollectionResource(Resource):
         db.session.commit()
         return user, 201
 
-def get_user_or_abort(id, api=ns):
+def get_user_or_abort(user_id, api=ns):
     """Finds user by ID. Raises 404 error when such does not exist."""
-    user = User.query.filter_by(id=id).first()
+    user = User.query.filter_by(id=user_id).first()
 
     if not user:
-        api.abort(404, 'User with id=<%s> not found' % id)
+        api.abort(404, 'User with id=<%s> not found' % user_id)
 
     return user

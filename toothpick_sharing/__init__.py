@@ -6,23 +6,36 @@ from flask_fixtures import load_fixtures, loaders
 from . import apis
 from .dal import db
 
-def bootstrap(name):
-    """Creates Flask application and itializes extensions"""
-    return _boot(bootstrap_app(name), bootsrap_db, bootsrap_api, CORS)
+class Service(object):
+    """Container for Flask application and extensions"""
 
-def _boot(app, *modules):
-    for module in modules:
-        module(app)
+    def __init__(self, app_name, root_path=None):
+        """
+        Initializes Flask application and extensions
 
-    return app
+        Attributes
+        ----------
+        app:flask.Flask
+            Flask application instance
 
-def bootstrap_app(name):
+        db:flask_sqlalchemy.SQLAlchemy
+            Flask-SQLAlchemy extension
+        
+        api:flask_restplus.Api
+            Flask-RestPlus extension
+
+        """
+        self.app = init_app(app_name, root_path)
+        self.db = init_db(self.app)
+        self.api = init_api(self.app)
+
+def init_app(name, root_path):
     """Creates Flask application"""
-    app = Flask(name)
-    app.config.from_pyfile('default.cfg')
+    app = Flask(name, root_path=root_path)
+    app.config.from_pyfile(os.path.join(app.root_path, 'default.cfg'))
     return app
 
-def bootsrap_db(app):
+def init_db(app):
     """Initializes Flas-Alchemy extension"""
     db.init_app(app)
 
@@ -33,10 +46,10 @@ def bootsrap_db(app):
     return db
 
 def _load_fixtures(app, db):
-    for fixture in app.config['STARTUP_FIXTURES']:
-        load_fixtures(db, loaders.load(os.path.join(app.root_path, '..', 'fixtures', fixture)))
+    for fixture in app.config.get('STARTUP_FIXTURES', []):
+        load_fixtures(db, loaders.load(os.path.join(app.root_path, 'fixtures', fixture)))
 
-def bootsrap_api(app):
+def init_api(app):
     """Initializes Flask-RestPlus extension"""
     api = Api(app)
 

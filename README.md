@@ -1,6 +1,6 @@
 # toothpick sharing service
-Start service as module `python -m toothpick_sharing` after installation or after navigating to project folder.
-Check http://localhost:5000/ after starting service for more details.
+Start service as module `python -m toothpick_sharing` after installing it or being in project root project folder.
+Swagger UI is available at http://localhost:5000/. To run tests execute `python -m unittest discover tests`
 
 ## API
 

@@ -28,6 +28,7 @@ class Service(object):
         self.app = init_app(app_name, root_path)
         self.db = init_db(self.app)
         self.api = init_api(self.app)
+        self.cors = CORS(self.app)
 
 def init_app(name, root_path):
     """Creates Flask application"""
